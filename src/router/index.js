@@ -56,109 +56,29 @@ export const constantRoutes = [
   },
 
   {
-    path: '/analysis',
+    path: '/user',
     component: Layout,
-    redirect: '/analysis/index',
+    redirect: '/user/index',
     children: [{
       path: 'index',
       name: 'index',
-      component: () => import('@/views/analysis'),
-      meta: { title: '统计分析', icon: 'analysis' }
+      component: () => import('@/views/user'),
+      meta: { title: '用户管理', icon: 'analysis' }
     }]
   },
 
   {
-    path: '/member',
+    path: '/shop',
     component: Layout,
-    redirect: '/member/manage',
-    children: [{
-      path: 'manage',
-      name: 'manage',
-      component: () => import('@/views/member/manage'),
-      meta: { title: '会员管理', icon: 'member' }
-    }]
-  },
-
-  {
-    path: '/order',
-    component: Layout,
-    redirect: '/order/index',
+    redirect: '/shop/index',
     children: [{
       path: 'index',
       name: 'index',
-      component: () => import('@/views/order/index'),
-      meta: { title: '订单中心', icon: 'order' }
+      component: () => import('@/views/shop'),
+      meta: { title: '店铺管理', icon: 'analysis' }
     }]
   },
 
-  {
-    path: '/goods',
-    component: Layout,
-    redirect: '/goods/class',
-    name: 'goods',
-    meta: { title: '业务管理', icon: 'goods' },
-    children: [{
-      path: 'class',
-      name: 'class',
-      component: () => import('@/views/goods/class'),
-      meta: { title: '业务分类', icon: 'class' }
-    }, {
-      path: 'list',
-      name: 'list',
-      component: () => import('@/views/goods/list'),
-      meta: { title: '业务列表', icon: 'list' }
-    }]
-  },
-
-  {
-    path: '/work',
-    component: Layout,
-    redirect: '/work/report',
-    name: 'work',
-    meta: { title: '办公中心', icon: 'work' },
-    children: [{
-      path: 'report',
-      name: 'report',
-      component: () => import('@/views/work/report'),
-      meta: { title: '工作汇报', icon: 'report' }
-    }, {
-      path: 'approval',
-      name: 'approval',
-      component: () => import('@/views/work/approval'),
-      meta: { title: '审批中心', icon: 'approval' }
-    }]
-  },
-  
-  {
-    path: '/waters',
-    component: Layout,
-    redirect: '/waters/customer',
-    name: 'waters',
-    meta: { title: '公海管理', icon: 'waters' },
-    children: [{
-      path: 'customer',
-      name: 'customer',
-      component: () => import('@/views/waters/customer'),
-      meta: { title: '客户公海', icon: 'customer' }
-    }, {
-      path: 'file',
-      name: 'file',
-      component: () => import('@/views/waters/file'),
-      meta: { title: '文档公海', icon: 'file' }
-    }]
-  },
-
-  {
-    path: '/person',
-    component: Layout,
-    redirect: '/person/manage',
-    children: [{
-      path: 'manage',
-      name: 'manage',
-      component: () => import('@/views/person/manage'),
-      meta: { title: '员工管理', icon: 'home' }
-    }]
-  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

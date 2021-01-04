@@ -30,14 +30,14 @@ Service.interceptors.request.use((config) => {
 // 添加响应拦截器
 Service.interceptors.response.use((response) => {
   const config = response.config.config
-  const data = response.data
-  if (data.code !== 200) {
-    if (data.code === 500) {
+  const data = response.data;
+  if (!data.success) {
+    if (data.code === 401) {
       removeToken();
       router.push({ path: `/login` })
       Message.error('登录失效，请重新登录');
     } else if (!config.selfTip) {
-      Message.error(data.msg);
+      Message.error(data.message);
     }
   }
   // 对响应数据做点什么

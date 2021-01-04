@@ -5,10 +5,7 @@ import { resetRouter } from '@/router'
 const getDefaultState = () => {
   return {
     token: getToken(),
-    name: localStorage.getItem('ZD_name') || '',
-    avatar: localStorage.getItem('ZD_avatar') || '',
-    id: localStorage.getItem('ZD_id') || '',
-    role: localStorage.getItem('ZD_role') || ''
+    userInfo: localStorage.getItem('EC_userInfo') ? JSON.parse(localStorage.getItem('EC_userInfo')) : null
   }
 }
 
@@ -19,22 +16,12 @@ const mutations = {
     Object.assign(state, getDefaultState())
   },
   SET_TOKEN: (state, token) => {
-    state.token = token
+    setToken(token);
+    state.token = token;
   },
-  SET_NAME: (state, name) => {
-    state.name = name
-    localStorage.setItem('ZD_name', name)
-  },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
-  },
-  SET_ID: (state, id) => {
-    state.id = id
-    localStorage.setItem('ZD_id', id)
-  },
-  SET_ROLE: (state, role) => {
-    state.role = role
-    localStorage.setItem('ZD_role', role)
+  SET_USERINFO: (state, userInfo) => {
+    localStorage.setItem('EC_userInfo', JSON.stringify(userInfo));
+    state.userInfo = userInfo;
   }
 }
 
@@ -44,16 +31,11 @@ const actions = {
     const { name, pwd } = userInfo
     console.log(userInfo)
     return new Promise((resolve, reject) => {
-      login({ phone: name.trim(), pwd: pwd }).then(response => {
+      login({ account: name.trim(), password: pwd }).then(response => {
         console.log(response.data)
-        const { token, name, phone, role, image, id } = response.data
-        console.log(token, name, phone, role, image, id)
-        commit('SET_TOKEN', token)
-        setToken(token)
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', image)
-        commit('SET_ID', id)
-        commit('SET_ROLE', role)
+        const { token } = response.data;
+        commit('SET_TOKEN', token);
+        commit('SET_USERINFO', response.data);
         resolve()
       }).catch(error => {
         reject(error)

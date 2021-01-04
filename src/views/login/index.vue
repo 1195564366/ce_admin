@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">中德商城管理系统</h3>
+        <h3 class="title">CE后台管理系统</h3>
       </div>
 
       <el-form-item prop="name">
@@ -54,24 +54,19 @@ export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      // if (!validUsername(value)) {
-      //   callback(new Error('Please enter the correct user name'))
-      // } else {
-      //   callback()
-      // }
       callback()
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 5) {
-        callback(new Error('The password can not be less than 5 digits'))
+        callback(new Error('密码不能少于5位'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        name: 'admin',
-        pwd: 'admin'
+        name: 'hzx_admin',
+        pwd: '123456'
       },
       loginRules: {
         name: [{ required: true, trigger: 'blur', validator: validateUsername }],

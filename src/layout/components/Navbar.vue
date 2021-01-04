@@ -12,7 +12,7 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <!-- <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" /> -->
-          <span>{{ name }} ({{ role | roleFilter }})</span>
+          <span>{{ userInfo.name }} </span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -39,17 +39,10 @@ export default {
     Breadcrumb,
     Hamburger,
   },
-  filters: {
-    roleFilter (e) {
-      if (e === 'SA') return '超级管理员'
-      console.log(e)
-      return Dic.findFilter('DIC001', e)
-    }
-  },
   computed: {
-    ...mapGetters(["sidebar", "avatar", "name"]),
-    role () {
-      return this.$store.state.user.role
+    ...mapGetters(["sidebar"]),
+    userInfo () {
+      return this.$store.state.user.userInfo;
     }
   },
   methods: {

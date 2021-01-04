@@ -13,8 +13,8 @@ export default {
   },
   methods: {
     async getDicData () {
-      const result = await this.$fetchPost('/common/enume');
-      Cache.set('ZD_DIC', result || []);
+      const result = await this.$fetchGet('/common/enume');
+      Cache.set('CE_DIC', result || []);
     }
   }
 }
