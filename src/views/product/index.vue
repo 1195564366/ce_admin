@@ -1,0 +1,305 @@
+<template>
+  <div class="app-container">
+    <avue-crud
+      :data="data"
+      :option="option"
+      :table-loading="tableLoading"
+      :page.sync="page"
+      @row-save="rowSave"
+      @row-update="rowUpdate"
+      @row-del="rowDel"
+      @current-change="currentChange"
+      @refresh-change="refreshChange"
+      @search-change="searchChange"
+      :permission="getPermission"
+    ></avue-crud>
+
+    <Confirm ref="confirm" />
+  </div>
+</template>
+
+<script>
+import Confirm from "@components/Confirm";
+import { Dic } from "@utils";
+import { Page } from "@minxin";
+
+export default {
+  components: {
+    Confirm,
+  },
+  mixins: [Page],
+  data() {
+    return {
+      search: {},
+      tableLoading: false,
+      data: [],
+      option: {
+        align: "center",
+        menuAlign: "center",
+        labelWidth: "125",
+        viewBtn: true,
+        column: [
+          {
+            label: "产品名称",
+            prop: "productName",
+            search: true,
+            rules: [
+              {
+                required: true,
+                message: "输入产品名称",
+              },
+            ],
+          },
+          {
+            label: "国家",
+            prop: "country",
+            type: "select",
+            search: true,
+            dicData: Dic.find("DIC006"),
+            rules: [
+              {
+                required: true,
+                message: "选择国家",
+              },
+            ],
+          },
+          {
+            label: "产品分类",
+            prop: "productClass",
+            type: "select",
+            search: true,
+            dicData: Dic.find("DIC007"),
+            rules: [
+              {
+                required: true,
+                message: "选择产品分类",
+              },
+            ],
+          },
+          {
+            label: "产品型号",
+            prop: "productModel",
+            rules: [
+              {
+                required: true,
+                message: "输入产品型号",
+              },
+            ],
+          },
+          {
+            label: "证书/检测报告",
+            prop: "productReport",
+            hide: true,
+            type: "upload",
+            accept: "image/png, image/jpeg",
+            listType: "picture-img",
+            multiple: false,
+            span: 12,
+            propsHttp: {
+              home: this.$fileUrl,
+              res: "data",
+            },
+            canvasOption: {
+              text: " ",
+              ratio: 1,
+            },
+            tip: "只能上传jpg/png图片，且不超过5M",
+            action: "/common/uploadFile",
+            rules: [
+              {
+                required: true,
+                message: "上传证书/检测报告",
+              },
+            ],
+          },
+          {
+            label: "产品包装六面图",
+            prop: "productPackingImg",
+            hide: true,
+            type: "upload",
+            accept: "image/png, image/jpeg",
+            listType: "picture-img",
+            multiple: false,
+            span: 12,
+            propsHttp: {
+              home: this.$fileUrl,
+              res: "data",
+            },
+            canvasOption: {
+              text: " ",
+              ratio: 1,
+            },
+            tip: "只能上传jpg/png图片，且不超过5M",
+            action: "/common/uploadFile",
+            rules: [
+              {
+                required: true,
+                message: "上传产品包装六面图",
+              },
+            ],
+          },
+          {
+            label: "产品说明书",
+            prop: "productInstructions",
+            hide: true,
+            type: "upload",
+            accept: "image/png, image/jpeg",
+            listType: "picture-img",
+            multiple: false,
+            span: 12,
+            propsHttp: {
+              home: this.$fileUrl,
+              res: "data",
+            },
+            canvasOption: {
+              text: " ",
+              ratio: 1,
+            },
+            tip: "只能上传jpg/png图片，且不超过5M",
+            action: "/common/uploadFile",
+            rules: [
+              {
+                required: true,
+                message: "上传产品产品说明书",
+              },
+            ],
+          },
+          {
+            label: "审核状态",
+            prop: "status",
+            type: "select",
+            dicData: Dic.find('DIC009'),
+            addDisplay: false,
+            search: true
+          }
+        ],
+      },
+    };
+  },
+  mounted() {
+    this.getList();
+  },
+  methods: {
+    // 列表
+    async getList(cb = () => {}) {
+      this.tableLoading = true;
+      const result = await this.$fetchGet("/admin/product/index", {
+        ...this.search,
+        pageNo: this.page.currentPage,
+        pageSize: this.page.pageSize,
+      });
+      this.tableLoading = false;
+      this.data = result ? result.rows : [];
+      this.page.total = result ? result.count : 0;
+      cb();
+    },
+    // 按钮权限
+    getPermission(key, row, index) {
+      if (key === "viewBtn") return true;
+      if (!row) return true;
+      const { status } = row;
+      return status === "reject";
+    },
+    // 新增
+    async rowSave(row, done, loading) {
+      const {
+        productName,
+        country,
+        productClass,
+        productModel,
+        productReport,
+        productPackingImg,
+        productInstructions,
+      } = row;
+      const result = await this.$fetchPost(
+        "/api/product/add",
+        {
+          productName,
+          country,
+          productClass,
+          productModel,
+          productReport,
+          productPackingImg,
+          productInstructions,
+        },
+        { allData: true }
+      );
+      loading();
+      if (!result.success) return;
+      done();
+      this.$message.success("店铺审核提交成功，请等待管理员审核通过");
+      this.getList();
+    },
+    // 重新提交
+    async rowUpdate(row, index, done, loading) {
+      const {
+        id,
+        shopName,
+        legalPrsonName,
+        legalPrsonCard,
+        email,
+        businessLicense,
+        contactName,
+        contactPhone,
+      } = row;
+      const result = await this.$fetchPost(
+        "/api/shop/repeatSubmit",
+        {
+          id,
+          shopName,
+          legalPrsonName,
+          legalPrsonCard,
+          email,
+          businessLicense,
+          contactName,
+          contactPhone,
+        },
+        { allData: true }
+      );
+      loading();
+      if (!result.success) return;
+      done();
+      this.$message.success("店铺重新审核提交成功，请等待管理员审核通过");
+      this.getList();
+    },
+    // 删除
+    async rowDel(row, index) {
+      const { id, shopName } = row;
+      this.$refs["confirm"].open({
+        message: `是否删除店铺《${shopName}》？`,
+        ok: async (cb) => {
+          const result = await this.$fetchGet(
+            `/api/shop/del`,
+            { id },
+            { allData: true }
+          );
+          cb();
+          if (!result.code) return;
+          this.$message.success("店铺删除成功");
+          this.getList();
+        },
+      });
+    },
+    // 分页
+    currentChange() {
+      this.getList();
+    },
+    // 搜索
+    async searchChange(params, done) {
+      this.search = params;
+      this.page.currentPage = 1;
+      this.getList(done);
+    },
+    // 重置
+    refreshChange() {
+      this.page.currentPage = 1;
+      this.getList();
+    },
+    // 发货
+    onDelivery() {},
+  },
+};
+</script>
+
+<style>
+</style>
