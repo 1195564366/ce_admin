@@ -5,27 +5,31 @@
       :option="option"
       :table-loading="tableLoading"
       :page.sync="page"
-      @row-save="rowSave"
-      @row-update="rowUpdate"
-      @row-del="rowDel"
       @current-change="currentChange"
       @refresh-change="refreshChange"
       @search-change="searchChange"
-      :permission="getPermission"
-    ></avue-crud>
+    >
+      <template slot-scope="scope" slot="menu">
+        <el-button type="text" size="mini" @click="firstReviewedAdmin(scope.row)" icon="el-icon-s-check" v-if="scope.row.status === '1'">审核</el-button>
+        <el-button type="text" size="mini" @click="firstReviewedLeader(scope.row)" icon="el-icon-s-check" v-if="['2', '3'].includes(scope.row.status)">审核</el-button>
+      </template>
+    </avue-crud>
 
-    <Confirm ref="confirm" />
+    <firstReviewedAdmin ref="firstReviewedAdmin" @ok="getList"/>
+    <firstReviewedLeader ref="firstReviewedLeader" @ok="getList"/>
   </div>
 </template>
 
 <script>
-import Confirm from "@components/Confirm";
 import { Dic } from "@utils";
 import { Page } from "@minxin";
+import firstReviewedAdmin from './firstReviewedAdmin';
+import firstReviewedLeader from './firstReviewedLeader';
 
 export default {
   components: {
-    Confirm,
+    firstReviewedAdmin,
+    firstReviewedLeader
   },
   mixins: [Page],
   data() {
@@ -38,6 +42,9 @@ export default {
         menuAlign: "center",
         labelWidth: "125",
         viewBtn: true,
+        addBtn: false,
+        editBtn: false,
+        delBtn: false,
         column: [
           {
             label: "产品名称",
@@ -170,10 +177,10 @@ export default {
             type: "select",
             dicData: Dic.find('DIC009'),
             addDisplay: false,
-            search: true
           }
         ],
       },
+      
     };
   },
   mounted() {
@@ -193,93 +200,6 @@ export default {
       this.page.total = result ? result.count : 0;
       cb();
     },
-    // 按钮权限
-    getPermission(key, row, index) {
-      if (key === "viewBtn") return true;
-      if (!row) return true;
-      const { status } = row;
-      return status === "reject";
-    },
-    // 新增
-    async rowSave(row, done, loading) {
-      const {
-        productName,
-        country,
-        productClass,
-        productModel,
-        productReport,
-        productPackingImg,
-        productInstructions,
-      } = row;
-      const result = await this.$fetchPost(
-        "/api/product/add",
-        {
-          productName,
-          country,
-          productClass,
-          productModel,
-          productReport,
-          productPackingImg,
-          productInstructions,
-        },
-        { allData: true }
-      );
-      loading();
-      if (!result.success) return;
-      done();
-      this.$message.success("店铺审核提交成功，请等待管理员审核通过");
-      this.getList();
-    },
-    // 重新提交
-    async rowUpdate(row, index, done, loading) {
-      const {
-        id,
-        shopName,
-        legalPrsonName,
-        legalPrsonCard,
-        email,
-        businessLicense,
-        contactName,
-        contactPhone,
-      } = row;
-      const result = await this.$fetchPost(
-        "/api/shop/repeatSubmit",
-        {
-          id,
-          shopName,
-          legalPrsonName,
-          legalPrsonCard,
-          email,
-          businessLicense,
-          contactName,
-          contactPhone,
-        },
-        { allData: true }
-      );
-      loading();
-      if (!result.success) return;
-      done();
-      this.$message.success("店铺重新审核提交成功，请等待管理员审核通过");
-      this.getList();
-    },
-    // 删除
-    async rowDel(row, index) {
-      const { id, shopName } = row;
-      this.$refs["confirm"].open({
-        message: `是否删除店铺《${shopName}》？`,
-        ok: async (cb) => {
-          const result = await this.$fetchGet(
-            `/api/shop/del`,
-            { id },
-            { allData: true }
-          );
-          cb();
-          if (!result.code) return;
-          this.$message.success("店铺删除成功");
-          this.getList();
-        },
-      });
-    },
     // 分页
     currentChange() {
       this.getList();
@@ -295,8 +215,14 @@ export default {
       this.page.currentPage = 1;
       this.getList();
     },
-    // 发货
-    onDelivery() {},
+    // admin初审
+    firstReviewedAdmin (row) {
+      this.$refs['firstReviewedAdmin'].open(row);
+    },
+    // leader初审
+    firstReviewedLeader (row) {
+      this.$refs['firstReviewedLeader'].open(row);
+    }
   },
 };
 </script>
