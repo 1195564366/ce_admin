@@ -10,13 +10,17 @@
       @search-change="searchChange"
     >
       <template slot-scope="scope" slot="menu">
-        <el-button type="text" size="mini" @click="firstReviewedAdmin(scope.row)" icon="el-icon-s-check" v-if="scope.row.status === '1'">审核</el-button>
-        <el-button type="text" size="mini" @click="firstReviewedLeader(scope.row)" icon="el-icon-s-check" v-if="['2', '3'].includes(scope.row.status)">审核</el-button>
+        <el-button type="text" size="mini" @click="firstReviewedAdmin(scope.row)" icon="el-icon-s-check" v-if="scope.row.status === '1'">初审审核</el-button>
+        <el-button type="text" size="mini" @click="firstReviewedLeader(scope.row)" icon="el-icon-s-check" v-if="['2', '3'].includes(scope.row.status)">初审审核</el-button>
+        <el-button type="text" size="mini" @click="endReviewedAdmin(scope.row)" icon="el-icon-s-check" v-if="scope.row.status === '6'">复审审核</el-button>
+        <el-button type="text" size="mini" @click="endReviewedLeader(scope.row)" icon="el-icon-s-check" v-if="['7', '8'].includes(scope.row.status)">复审审核</el-button>
       </template>
     </avue-crud>
 
-    <firstReviewedAdmin ref="firstReviewedAdmin" @ok="getList"/>
-    <firstReviewedLeader ref="firstReviewedLeader" @ok="getList"/>
+    <firstReviewedAdmin ref="firstReviewedAdmin" @ok="getList" />
+    <firstReviewedLeader ref="firstReviewedLeader" @ok="getList" />
+    <endReviewedAdmin ref="endReviewedAdmin" @ok="getList" />
+    <endReviewedLeader ref="endReviewedLeader" @ok="getList" />
   </div>
 </template>
 
@@ -25,11 +29,15 @@ import { Dic } from "@utils";
 import { Page } from "@minxin";
 import firstReviewedAdmin from './firstReviewedAdmin';
 import firstReviewedLeader from './firstReviewedLeader';
+import endReviewedAdmin from './endReviewedAdmin';
+import endReviewedLeader from './endReviewedLeader';
 
 export default {
   components: {
     firstReviewedAdmin,
-    firstReviewedLeader
+    firstReviewedLeader,
+    endReviewedAdmin,
+    endReviewedLeader
   },
   mixins: [Page],
   data() {
@@ -56,6 +64,13 @@ export default {
                 message: "输入产品名称",
               },
             ],
+          },
+          {
+            label: "审核状态",
+            prop: "status",
+            type: "select",
+            dicData: Dic.find('DIC009'),
+            addDisplay: false,
           },
           {
             label: "国家",
@@ -170,13 +185,14 @@ export default {
                 message: "上传产品产品说明书",
               },
             ],
-          },
-          {
-            label: "审核状态",
-            prop: "status",
-            type: "select",
-            dicData: Dic.find('DIC009'),
-            addDisplay: false,
+          }, {
+            label: "品牌",
+            prop: "brand",
+            hide: true,
+          }, {
+            label: "ASIN",
+            prop: "asin",
+            hide: true,
           }
         ],
       },
@@ -222,6 +238,14 @@ export default {
     // leader初审
     firstReviewedLeader (row) {
       this.$refs['firstReviewedLeader'].open(row);
+    },
+    // admin复审
+    endReviewedAdmin (row) {
+      this.$refs['endReviewedAdmin'].open(row);
+    },
+    // leader复审
+    endReviewedLeader (row) {
+      this.$refs['endReviewedLeader'].open(row);
     }
   },
 };

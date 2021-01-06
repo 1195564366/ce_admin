@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="初审审核" :visible="show" @close="close">
+  <el-dialog title="初审审核" :visible="show" @close="close" width="500px">
     <avue-form
       :option="option"
       v-model="form"
