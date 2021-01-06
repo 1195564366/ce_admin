@@ -65,8 +65,8 @@ export default {
     }
     return {
       loginForm: {
-        name: 'hzx_admin',
-        pwd: '123456'
+        name: '',
+        pwd: ''
       },
       loginRules: {
         name: [{ required: true, trigger: 'blur', validator: validateUsername }],

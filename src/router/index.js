@@ -80,6 +80,18 @@ export const constantRoutes = [
   },
 
   {
+    path: '/productList',
+    component: Layout,
+    redirect: '/productList/index',
+    children: [{
+      path: 'index',
+      name: 'index',
+      component: () => import('@/views/productList'),
+      meta: { title: '产品管理', icon: 'analysis' }
+    }]
+  },
+
+  {
     path: '/product',
     component: Layout,
     redirect: '/product/index',
@@ -88,6 +100,18 @@ export const constantRoutes = [
       name: 'index',
       component: () => import('@/views/product'),
       meta: { title: '产品审核', icon: 'analysis' }
+    }]
+  },
+
+  {
+    path: '/sendGoods',
+    component: Layout,
+    redirect: '/sendGoods/index',
+    children: [{
+      path: 'index',
+      name: 'index',
+      component: () => import('@/views/sendGoods'),
+      meta: { title: '发货记录', icon: 'analysis' }
     }]
   },
 
