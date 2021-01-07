@@ -15,6 +15,11 @@
           v-if="scope.row.status === 'waitReviewed'"
           @click="onReviewed(scope.row)"
         >审核</el-button>
+        <el-button
+          type="text"
+          v-if="scope.row.status === 'adopt'"
+          @click="onUseStatus(scope.row)"
+        >{{ scope.row.useStatus ? '关闭' : '启用' }}</el-button>
       </template>
     </avue-crud>
 
@@ -222,6 +227,10 @@ export default {
     this.getList();
   },
   methods: {
+    // 店铺启用/关闭
+    async onUseStatus (row) {
+      console.log(row);
+    },
     // 审核表单提交
     async reviewedSubmit(data, loading) {
       const { status, rejectReason } = data;

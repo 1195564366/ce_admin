@@ -38,7 +38,7 @@ module.exports = {
     },
     proxy: {
       '/common': {
-        target: 'http://localhost:7001',
+        target: 'http://localhost:7009',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
@@ -46,7 +46,7 @@ module.exports = {
         }
       },
       '/admin': {
-        target: 'http://localhost:7001',
+        target: 'http://localhost:7009',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
