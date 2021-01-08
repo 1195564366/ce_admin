@@ -24,7 +24,7 @@
     </avue-crud>
 
     <!-- 审核表单 -->
-    <el-dialog title="店铺审核" :visible="reviewedShow" width="500px">
+    <el-dialog title="店铺审核" :visible="reviewedShow" width="500px" @close="reviewedClose">
       <avue-form
         :option="reviewedOption"
         ref="reviewedForm"
@@ -104,6 +104,10 @@ export default {
                 message: "输入店铺名称",
               },
             ],
+          },
+          {
+            label: "店铺链接",
+            prop: "shopLink",
           },
           {
             label: "法人姓名",

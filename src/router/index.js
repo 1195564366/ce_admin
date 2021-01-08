@@ -68,13 +68,13 @@ export const constantRoutes = [
   },
 
   {
-    path: '/shop',
+    path: '/shopList',
     component: Layout,
-    redirect: '/shop/index',
+    redirect: '/shopList/index',
     children: [{
       path: 'index',
-      name: 'index',
-      component: () => import('@/views/shop'),
+      name: 'shopList',
+      component: () => import('@/views/shopList'),
       meta: { title: '店铺管理', icon: 'analysis' }
     }]
   },
@@ -92,16 +92,23 @@ export const constantRoutes = [
   },
 
   {
-    path: '/product',
+    path: '/reviewed',
     component: Layout,
-    redirect: '/product/index',
+    redirect: '/reviewed/shop',
+    meta: { title: '审核中心', icon: 'analysis' },
     children: [{
-      path: 'index',
-      name: 'index',
-      component: () => import('@/views/product'),
+      path: 'shop',
+      name: 'reviewedShop',
+      component: () => import('@/views/reviewed/shop'),
+      meta: { title: '店铺审核', icon: 'analysis' }
+    }, {
+      path: 'product',
+      name: 'reviewedProduct',
+      component: () => import('@/views/reviewed/product'),
       meta: { title: '产品审核', icon: 'analysis' }
     }]
   },
+
 
   {
     path: '/sendGoods',
