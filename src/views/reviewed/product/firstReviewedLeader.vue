@@ -18,7 +18,6 @@ export default {
       productName: null,
       adminStatus: null,
       adminRejectReason: null,
-      adminAmazonSendGoodLink: null,
       id: null,
       form: {
         status: null,
@@ -26,12 +25,12 @@ export default {
       },
       option: {
         labelWidth: "125",
+        span: 24,
         column: [
           {
             label: "产品名称",
             prop: "productName",
-            detail: true,
-            span: 24,
+            detail: true
           },
           {
             label: "管理员审核状态",
@@ -50,16 +49,8 @@ export default {
             ],
           },
           {
-            label: "亚马逊发货链接",
-            prop: "adminAmazonSendGoodLink",
-            span: 24,
-            detail: true,
-            display: false
-          },
-          {
             label: "管理员驳回原因",
             prop: "adminRejectReason",
-            span: 24,
             detail: true,
             display: false
           },
@@ -67,7 +58,6 @@ export default {
             label: "审核状态",
             prop: "status",
             type: "radio",
-            span: 24,
             dicData: [
               {
                 label: "通过",
@@ -86,16 +76,8 @@ export default {
             ],
           },
           {
-            label: "亚马逊发货链接",
-            prop: "amazonSendGoodLink",
-            span: 24,
-            display: false,
-            rules: [],
-          },
-          {
             label: "驳回原因",
             prop: "rejectReason",
-            span: 24,
             type: "textarea",
             display: false,
             rules: [],
@@ -105,28 +87,12 @@ export default {
     };
   },
   watch: {
-    "form.adminStatus": {
-      handler (val) {
-        const adminAmazonSendGoodLink = this.findObject(this.option.column, 'adminAmazonSendGoodLink');
-        const adminRejectReason = this.findObject(this.option.column, 'adminRejectReason');
-        if (val === '3') {
-          adminAmazonSendGoodLink.display = true;
-          adminRejectReason.display = false;
-        } else {
-          adminAmazonSendGoodLink.display = false;
-          adminRejectReason.display = true;
-        }
-      },
-      immediate: true
-    },
     "form.status": {
       handler(val) {
         const rejectReason = this.findObject(
           this.option.column,
           "rejectReason"
         );
-        const amazonSendGoodLink = this.findObject(this.option.column, "amazonSendGoodLink");
-        console.log(val)
         if (val === '4') {
           rejectReason.display = true;
           rejectReason.rules = [
@@ -139,16 +105,6 @@ export default {
           rejectReason.display = false;
           rejectReason.rules = [];
         }
-        if (val === '5' && this.adminStatus === '2') {
-          amazonSendGoodLink.display = true;
-          amazonSendGoodLink.rules = [{
-            required: true,
-            message: "输入亚马逊发货链接"
-          }]
-        } else {
-          amazonSendGoodLink.display = false;
-          amazonSendGoodLink.rules = []
-        }
       },
       immediate: true,
     },
@@ -156,18 +112,16 @@ export default {
   methods: {
     open(row) {
       this.show = true;
-      const { id, productName, status, rejectReason, amazonSendGoodLink } = row;
+      const { id, productName, status, rejectReason } = row;
       console.log(row);
       this.id = id;
       this.productName = productName;
       this.adminStatus = status;
       this.adminRejectReason = rejectReason;
-      this.adminAmazonSendGoodLink = amazonSendGoodLink
       this.form = {
         productName,
         adminStatus: status,
         adminRejectReason: rejectReason,
-        adminAmazonSendGoodLink: amazonSendGoodLink,
       };
     },
     close() {
@@ -179,19 +133,17 @@ export default {
       this.form.productName = this.productName;
       this.form.adminStatus = this.adminStatus;
       this.form.adminRejectReason = this.adminRejectReason;
-      this.form.adminAmazonSendGoodLink = this.adminAmazonSendGoodLink;
       this.form.status = null;
     },
-    // 管理员初审提交
+    // leader审核提交
     async submit(form, done) {
-      const { status, rejectReason, amazonSendGoodLink } = form;
+      const { status, rejectReason } = form;
       const result = await this.$fetchPost(
         "/admin/product/firstReviewed",
         {
           id: this.id,
           status,
           rejectReason,
-          amazonSendGoodLink: amazonSendGoodLink || this.adminAmazonSendGoodLink,
           type: 'leader'
         },
         {

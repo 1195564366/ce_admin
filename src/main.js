@@ -42,6 +42,7 @@ Vue.prototype.$fetchPost = post;
 Vue.prototype.$fetchGet = get;
 Vue.prototype.$fileUrl = window.$fileUrl;
 Vue.prototype.$orderFileAccept = ".jpg,.jpeg,.png,.pdf,.JPG,.JPEG,.PDF"
+Vue.prototype.$dialogWidth = '500';
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale });
 // Vue.use(ElementUI)

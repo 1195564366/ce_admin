@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="初审审核" :visible="show" @close="close" width="500px">
+  <el-dialog title="产品审核" :visible="show" @close="close" width="500px">
     <avue-form
       :option="option"
       v-model="form"
@@ -55,13 +55,6 @@ export default {
             ],
           },
           {
-            label: "亚马逊发货链接",
-            prop: "amazonSendGoodLink",
-            span: 24,
-            display: false,
-            rules: [],
-          },
-          {
             label: "驳回原因",
             prop: "rejectReason",
             span: 24,
@@ -76,28 +69,11 @@ export default {
   watch: {
     "form.status": {
       handler(val) {
-        const amazonSendGoodLink = this.findObject(
-          this.option.column,
-          "amazonSendGoodLink"
-        );
         const rejectReason = this.findObject(
           this.option.column,
           "rejectReason"
         );
-        if (val === "3") {
-          amazonSendGoodLink.display = true;
-          amazonSendGoodLink.rules = [
-            {
-              required: true,
-              message: "输入亚马逊发货链接",
-            },
-          ];
-
-          rejectReason.display = false;
-          rejectReason.rules = [];
-        } else if (val === "2") {
-          amazonSendGoodLink.display = false;
-          amazonSendGoodLink.rules = [];
+        if (val === "2") {
 
           rejectReason.display = true;
           rejectReason.rules = [
@@ -107,8 +83,6 @@ export default {
             },
           ];
         } else {
-          amazonSendGoodLink.display = false;
-          amazonSendGoodLink.rules = [];
           rejectReason.display = false;
           rejectReason.rules = [];
         }
@@ -135,16 +109,15 @@ export default {
       this.form.productName = this.productName;
       this.form.status = null;
     },
-    // leader初审提交
+    // admin审核提交
     async submit(form, done) {
-      const { status, rejectReason, amazonSendGoodLink } = form;
+      const { status, rejectReason } = form;
       const result = await this.$fetchPost(
         "/admin/product/firstReviewed",
         {
           id: this.id,
           status,
           rejectReason,
-          amazonSendGoodLink,
           type: 'admin'
         },
         {

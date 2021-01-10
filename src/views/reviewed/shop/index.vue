@@ -188,7 +188,6 @@ export default {
             label: "审核状态",
             prop: "status",
             type: 'select',
-            search: true,
             addDisplay: false,
             editDisplay: false,
             dicData: Dic.find("DIC001"),

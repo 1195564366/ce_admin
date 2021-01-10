@@ -39,6 +39,8 @@ export default {
         delBtn: false,
         addBtn: false,
         viewBtn: true,
+        dialogWidth: this.$dialogWidth,
+        span: 24,
         column: [
           {
             label: "产品名称",
@@ -66,21 +68,6 @@ export default {
             hide: true,
           },
           {
-            label: "品牌",
-            prop: "brand",
-            hide: true,
-          },
-          {
-            label: "ASIN",
-            prop: "asin",
-            hide: true,
-          },
-          {
-            label: "亚马逊发货链接",
-            prop: "amazonSendGoodLink",
-            hide: true,
-          },
-          {
             label: "证书/检测报告",
             prop: "productReport",
             hide: true,
@@ -88,7 +75,6 @@ export default {
             accept: "image/png, image/jpeg",
             listType: "picture-img",
             multiple: false,
-            span: 12,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
@@ -114,7 +100,6 @@ export default {
             accept: "image/png, image/jpeg",
             listType: "picture-img",
             multiple: false,
-            span: 12,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
@@ -140,7 +125,6 @@ export default {
             accept: "image/png, image/jpeg",
             listType: "picture-img",
             multiple: false,
-            span: 12,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",

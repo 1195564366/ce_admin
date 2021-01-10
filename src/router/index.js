@@ -102,6 +102,11 @@ export const constantRoutes = [
       component: () => import('@/views/reviewed/shop'),
       meta: { title: '店铺审核', icon: 'analysis' }
     }, {
+      path: 'certificate',
+      name: 'reviewedCertificate',
+      component: () => import('@/views/reviewed/certificate'),
+      meta: { title: '证书审核', icon: 'analysis' }
+    }, {
       path: 'product',
       name: 'reviewedProduct',
       component: () => import('@/views/reviewed/product'),

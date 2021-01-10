@@ -10,10 +10,10 @@
       @search-change="searchChange"
     >
       <template slot-scope="scope" slot="menu">
-        <el-button type="text" size="mini" @click="firstReviewedAdmin(scope.row)" icon="el-icon-s-check" v-if="scope.row.status === '1'">初审审核</el-button>
-        <el-button type="text" size="mini" @click="firstReviewedLeader(scope.row)" icon="el-icon-s-check" v-if="['2', '3'].includes(scope.row.status)">初审审核</el-button>
-        <el-button type="text" size="mini" @click="endReviewedAdmin(scope.row)" icon="el-icon-s-check" v-if="scope.row.status === '6'">复审审核</el-button>
-        <el-button type="text" size="mini" @click="endReviewedLeader(scope.row)" icon="el-icon-s-check" v-if="['7', '8'].includes(scope.row.status)">复审审核</el-button>
+        <el-button type="text" size="mini" @click="firstReviewedAdmin(scope.row)" icon="el-icon-s-check" v-if="scope.row.status === '1'">审核</el-button>
+        <el-button type="text" size="mini" @click="firstReviewedLeader(scope.row)" icon="el-icon-s-check" v-if="['2', '3'].includes(scope.row.status)">审核</el-button>
+        <!-- <el-button type="text" size="mini" @click="endReviewedAdmin(scope.row)" icon="el-icon-s-check" v-if="scope.row.status === '6'">复审审核</el-button>
+        <el-button type="text" size="mini" @click="endReviewedLeader(scope.row)" icon="el-icon-s-check" v-if="['7', '8'].includes(scope.row.status)">复审审核</el-button> -->
       </template>
     </avue-crud>
 
@@ -53,6 +53,8 @@ export default {
         addBtn: false,
         editBtn: false,
         delBtn: false,
+        span: 24,
+        dialogWidth: '500',
         column: [
           {
             label: "产品名称",
@@ -116,7 +118,6 @@ export default {
             accept: "image/png, image/jpeg",
             listType: "picture-img",
             multiple: false,
-            span: 12,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
@@ -142,7 +143,6 @@ export default {
             accept: "image/png, image/jpeg",
             listType: "picture-img",
             multiple: false,
-            span: 12,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
@@ -168,7 +168,6 @@ export default {
             accept: "image/png, image/jpeg",
             listType: "picture-img",
             multiple: false,
-            span: 12,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
@@ -185,14 +184,6 @@ export default {
                 message: "上传产品产品说明书",
               },
             ],
-          }, {
-            label: "品牌",
-            prop: "brand",
-            hide: true,
-          }, {
-            label: "ASIN",
-            prop: "asin",
-            hide: true,
           }
         ],
       },
