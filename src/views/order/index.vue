@@ -5,22 +5,11 @@
       :option="option"
       :table-loading="tableLoading"
       :page.sync="page"
+      @row-update="rowUpdate"
       @current-change="currentChange"
       @refresh-change="refreshChange"
       @search-change="searchChange"
     >
-      <template slot="phone" slot-scope="scope">
-        {{ scope.row.user.name }}
-      </template>
-      <template slot="productName" slot-scope="scope">
-        {{ scope.row.product.productName }}
-      </template>
-      <template slot="shopName" slot-scope="scope">
-        {{ scope.row.shop.shopName }}
-      </template>
-      <template slot="asin" slot-scope="scope">
-        {{ scope.row.shopToProduct.asin }}
-      </template>
     </avue-crud>
 
     <Confirm ref="confirm" />
@@ -47,43 +36,58 @@ export default {
         align: "center",
         menuAlign: "center",
         labelWidth: "120",
-        menu: false,
         addBtn: false,
+        delBtn: false,
+        editBtnText: '查审',
+        editTitle: '查审',
+        span: 24,
+        dialogWidth: this.$dialogWidth,
         column: [
           {
-            label: "发货人",
-            prop: "phone",
-            slot: true,
+            label: "用户",
+            prop: "name",
+            search: true,
+            editDisabled: true
           },
           {
-            label: "店铺名称",
-            prop: "shopName",
-            slot: true,
+            label: "账单号",
+            prop: "orderId",
+            search: true,
+            editDisabled: true
           },
           {
-            label: "产品名称",
-            prop: "productName",
-            slot: true,
+            label: "账单类型",
+            prop: "type",
+            type: 'select',
+            dicData: Dic.find('DIC005'),
+            search: true,
+            editDisabled: true
           },
           {
-            label: "产品ASIN",
-            prop: "asin",
-            slot: true,
+            label: "费用明细",
+            prop: "message",
+            editDisabled: true
           },
           {
-            label: "箱数",
-            prop: "boxNum",
+            label: "应付金额",
+            prop: "amountCost",
+            editDisabled: true
           },
           {
-            label: "数量",
-            prop: "num",
+            label: "已付金额",
+            prop: "paidCost",
+            rules: [{
+              required: true,
+              message: '输入已付金额'
+            }]
           },
           {
-            label: "发货时间",
+            label: "下单时间",
             prop: "createdAt",
             type: "date",
             format: "yyyy-MM-dd HH:mm:ss",
             valueFormat: "yyyy-MM-dd HH:mm:ss",
+            editDisplay: false
           },
         ],
       },
@@ -96,7 +100,7 @@ export default {
     // 列表
     async getList(cb = () => {}) {
       this.tableLoading = true;
-      const result = await this.$fetchGet("/admin/sendGoods/index", {
+      const result = await this.$fetchGet("/admin/order/index", {
         ...this.search,
         pageNo: this.page.currentPage,
         pageSize: this.page.pageSize,
@@ -104,12 +108,30 @@ export default {
       this.tableLoading = false;
       this.data = result
         ? result.rows.map((item) => {
-            item.phone = item.user.phone;
+            item.name = item.user.name
             return item;
           })
         : [];
       this.page.total = result ? result.count : 0;
       cb();
+    },
+    async rowUpdate (row, index, done, loading) {
+      const { id, paidCost } = row;
+      const result = await this.$fetchPost(
+        "/admin/order/check",
+        {
+          id,
+          paidCost
+        },
+        {
+          allData: true,
+        }
+      );
+      loading();
+      if (!result.success) return;
+      this.$message.success('账单审查成功');
+      done();
+      this.getList();
     },
     // 分页
     currentChange() {
@@ -117,6 +139,7 @@ export default {
     },
     // 搜索
     async searchChange(params, done) {
+      console.log(params)
       this.search = params;
       this.page.currentPage = 1;
       this.getList(done);

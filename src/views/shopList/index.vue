@@ -61,11 +61,13 @@ export default {
           },
           {
             label: "店铺链接",
-            prop: "shopLink"
+            prop: "shopLink",
+            type: 'url'
           },
           {
-            label: "店铺主人",
-            prop: "phone"
+            label: "用户",
+            prop: "name",
+            search: true
           },
           {
             label: "法人姓名",
@@ -143,7 +145,7 @@ export default {
       });
       this.tableLoading = false;
       this.data = result ? result.rows.map(item => {
-        item.phone = item.user.phone;
+        item.name = item.user.name;
         return item
       }) : [];
       this.page.total = result ? result.count : 0;

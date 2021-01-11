@@ -9,7 +9,11 @@
       @refresh-change="refreshChange"
       @search-change="searchChange"
       @row-update="rowUpdate"
-    ></avue-crud>
+    >
+      <template slot="expand" slot-scope="{ row }">
+        <expand :list="row.shops" />
+      </template>
+    </avue-crud>
 
     <Confirm ref="confirm" />
   </div>
@@ -19,10 +23,12 @@
 import Confirm from "@components/Confirm";
 import { Dic } from "@utils";
 import { Page } from "@minxin";
+import expand from "./expand";
 
 export default {
   components: {
     Confirm,
+    expand,
   },
   mixins: [Page],
   data() {
@@ -32,21 +38,34 @@ export default {
       search: {},
       data: [],
       option: {
+        expand: true,
         align: "center",
         menuAlign: "center",
         labelWidth: "100",
         delBtn: false,
         addBtn: false,
+        span: 24,
+        dialogWidth: this.$dialogWidth,
         column: [
           {
-            label: "用户Id",
-            prop: "id",
+            label: "用户名称",
+            prop: "name",
             editDisabled: true,
           },
           {
             label: "手机号码",
             prop: "phone",
             search: true,
+            editDisabled: true,
+          },
+          {
+            label: "店铺数量",
+            prop: "shopNum",
+            editDisabled: true,
+          },
+          {
+            label: "产品数量",
+            prop: "productNum",
             editDisabled: true,
           },
           {
@@ -97,6 +116,14 @@ export default {
               },
             ],
           },
+          {
+            label: "注册时间",
+            prop: "createdAt",
+            type: "date",
+            format: "yyyy-MM-dd HH:mm:ss",
+            valueFormat: "yyyy-MM-dd HH:mm:ss",
+            editDisplay: false
+          },
         ],
       },
     };
@@ -114,7 +141,13 @@ export default {
         pageSize: this.page.pageSize,
       });
       this.tableLoading = false;
-      this.data = result ? result.rows : [];
+      this.data = result
+        ? result.rows.map((item) => {
+            item.shopNum = item.shops.length;
+            item.productNum = item.products.length;
+            return item;
+          })
+        : [];
       this.page.total = result ? result.count : 0;
       cb();
     },
@@ -150,7 +183,7 @@ export default {
       );
       loading();
       if (!result.success) return;
-      this.$message.success('用户费用更新设置成功');
+      this.$message.success("用户费用更新设置成功");
       done();
       this.getList();
     },
