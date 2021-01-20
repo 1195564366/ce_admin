@@ -73,7 +73,7 @@ export default {
             hide: true,
             type: "upload",
             accept: "image/png, image/jpeg",
-            listType: "picture-img",
+            listType: "picture-card",
             multiple: false,
             propsHttp: {
               home: this.$fileUrl,
@@ -98,7 +98,7 @@ export default {
             hide: true,
             type: "upload",
             accept: "image/png, image/jpeg",
-            listType: "picture-img",
+            listType: "picture-card",
             multiple: false,
             propsHttp: {
               home: this.$fileUrl,
@@ -123,7 +123,7 @@ export default {
             hide: true,
             type: "upload",
             accept: "image/png, image/jpeg",
-            listType: "picture-img",
+            listType: "picture-card",
             multiple: false,
             propsHttp: {
               home: this.$fileUrl,
