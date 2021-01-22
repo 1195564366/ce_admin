@@ -116,6 +116,11 @@ export const constantRoutes = [
       name: 'reviewedRecover',
       component: () => import('@/views/reviewed/recover'),
       meta: { title: '回收审核', icon: 'analysis' }
+    }, {
+      path: 'declare',
+      name: 'declareRecover',
+      component: () => import('@/views/reviewed/declare'),
+      meta: { title: '申报审核', icon: 'analysis' }
     }]
   },
 
@@ -141,6 +146,18 @@ export const constantRoutes = [
       name: 'index',
       component: () => import('@/views/order'),
       meta: { title: '账单管理', icon: 'analysis' }
+    }]
+  },
+
+  {
+    path: '/business',
+    component: Layout,
+    redirect: '/business/index',
+    children: [{
+      path: 'index',
+      name: 'index',
+      component: () => import('@/views/business'),
+      meta: { title: '业务管理', icon: 'analysis' }
     }]
   },
 
