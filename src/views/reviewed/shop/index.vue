@@ -24,7 +24,7 @@
     </avue-crud>
 
     <!-- 审核表单 -->
-    <el-dialog title="店铺审核" :visible="reviewedShow" width="500px" @close="reviewedClose">
+    <el-dialog title="店铺审核" :visible="reviewedShow" width="500px" @close="reviewedClose" :close-on-click-modal="false">
       <avue-form
         :option="reviewedOption"
         ref="reviewedForm"
@@ -93,6 +93,10 @@ export default {
         editBtn: false,
         delBtn: false,
         addBtn: false,
+        viewBtn: true,
+        span: 24,
+        dialogWidth: this.$dialogWidth,
+        dialogClickModal: false,
         column: [
           {
             label: "店铺名称",
@@ -146,16 +150,13 @@ export default {
             accept: "image/png, image/jpeg",
             listType: "picture-img",
             multiple: false,
+            hide: true,
             span: 24,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
             },
-            canvasOption: {
-              text: " ",
-              ratio: 1,
-            },
-            tip: "只能上传jpg/png图片，且不超过5M",
+            tip: "只能上传jpg/png图片、pdf文件，且不超过5M",
             action: "/common/uploadFile",
             rules: [
               {
@@ -163,6 +164,8 @@ export default {
                 message: "上传营业执照",
               },
             ],
+            uploadPreview: this.$onUploadPreview,
+            dialogClickModal: false,
           },
           {
             label: "联系人姓名",
@@ -195,6 +198,7 @@ export default {
           {
             label: "驳回原因",
             prop: "rejectReason",
+            hide: true,
             addDisplay: false,
             editDisplay: false,
           },

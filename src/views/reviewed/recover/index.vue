@@ -18,7 +18,7 @@
     </avue-crud>
 
     <!-- 审核表单 -->
-    <el-dialog title="店铺审核" :visible="reviewedShow" width="500px" @close="reviewedClose">
+    <el-dialog title="回收审核" :visible="reviewedShow" width="500px" @close="reviewedClose">
       <avue-form
         :option="reviewedOption"
         ref="reviewedForm"
@@ -90,9 +90,12 @@ export default {
         align: "center",
         menuAlign: "center",
         labelWidth: "100",
+        span: 24,
+        dialogWidth: this.$dialogWidth,
         editBtn: false,
         delBtn: false,
         addBtn: false,
+        viewBtn: true,
         column: [
           {
             label: "公司名称",
@@ -113,6 +116,7 @@ export default {
             accept: "image/png, image/jpeg",
             listType: "picture-img",
             multiple: false,
+            hide: true,
             span: 24,
             propsHttp: {
               home: this.$fileUrl,
@@ -130,6 +134,7 @@ export default {
                 message: "上传营业执照",
               },
             ],
+            uploadPreview: this.$onUploadPreview,
           },
         ],
       },

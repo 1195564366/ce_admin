@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="证书审核" :visible="show" width="500px" @close="close">
+  <el-dialog title="证书审核" :visible="show" width="500px" @close="close" :close-on-click-modal="false">
     <avue-form
       :option="option"
       v-model="form"
@@ -78,7 +78,8 @@ export default {
             prop: "adminDoc",
             type: "upload",
             detail: true,
-            listType: "text",
+            listType: "picture-card",
+            uploadPreview: this.$onUploadPreview,
             multiple: false,
             propsHttp: {
               home: this.$fileUrl,
@@ -91,7 +92,8 @@ export default {
             prop: "adminOuDaiCe",
             type: "upload",
             detail: true,
-            listType: "text",
+            listType: "picture-card",
+            uploadPreview: this.$onUploadPreview,
             multiple: false,
             propsHttp: {
               home: this.$fileUrl,
@@ -131,13 +133,12 @@ export default {
             prop: "doc",
             type: "upload",
             accept: ".doc,.docx",
-            listType: "text",
+            listType: "picture-img",
             multiple: false,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
             },
-            limit: 1,
             data: {
               name: "doc文件"
             },
@@ -145,26 +146,27 @@ export default {
             action: "/common/uploadFile",
             display: false,
             rules: [],
+            uploadPreview: this.$onUploadPreview,
           },
           {
             label: "欧代证书",
             prop: "ouDaiCe",
             type: "upload",
-            accept: ".pdf,.png,.jpeg,.jpg",
-            listType: "text",
+            accept: this.$accept,
+            listType: "picture-img",
             multiple: false,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
             },
-            limit: 1,
             data: {
               name: "欧代证书"
             },
-            tip: "只能上传pdf文件或jpg/png图片，且不超过5M",
+            tip: this.$tip,
             action: "/common/uploadFile",
             display: false,
             rules: [],
+            uploadPreview: this.$onUploadPreview,
           },
           {
             label: "驳回原因",

@@ -69,14 +69,6 @@ export default {
             editDisabled: true,
           },
           {
-            label: "用户类型",
-            prop: "type",
-            type: "select",
-            dicData: Dic.find("DIC003"),
-            search: true,
-            editDisabled: true,
-          },
-          {
             label: "用户来源",
             prop: "source",
             type: "select",

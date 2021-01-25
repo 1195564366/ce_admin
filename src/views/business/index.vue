@@ -111,7 +111,7 @@ export default {
           uploadProp(
             "中文营业执照",
             "licenseCn",
-            this.$orderFileAccept,
+            this.$accept,
             true,
             true,
             "picture-img"
@@ -119,7 +119,7 @@ export default {
           uploadProp(
             "英文营业执照",
             "licenseEn",
-            this.$orderFileAccept,
+            this.$accept,
             true,
             true,
             "picture-img"
@@ -127,21 +127,21 @@ export default {
           uploadProp(
             "授权书",
             "certificateAuth",
-            this.$orderFileAccept,
+            this.$accept,
             true,
             true,
             "picture-img"
           ),
-          uploadProp("商品图片", "productPicture", this.$orderFileAccept, true),
+          uploadProp("商品图片", "productPicture", this.$accept, true),
           uploadProp(
             "邮箱授权书",
             "mailCertificateAuth",
-            this.$orderFileAccept,
+            this.$accept,
             false,
             false,
             "picture-img"
           ),
-          uploadProp("其他资料", "data", this.$orderFileAccept, true, false),
+          uploadProp("其他资料", "data", this.$accept, true, false),
           {
             label: "注册号",
             prop: "registerNumber",
@@ -169,7 +169,7 @@ export default {
             prop: "certificate",
             hide: true,
             type: "upload",
-            accept: this.$orderFileAccept,
+            accept: this.$accept,
             multiple: false,
             span: 24,
             listType: "picture-card",

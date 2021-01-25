@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="证书审核" :visible="show" width="500px" @close="close">
+  <el-dialog title="证书审核" :visible="show" width="500px" @close="close" :close-on-click-modal="false">
     <avue-form
       :option="option"
       v-model="form"
@@ -83,7 +83,7 @@ export default {
             prop: "doc",
             type: "upload",
             accept: ".doc,.docx",
-            listType: "text",
+            listType: "picture-card",
             multiple: false,
             propsHttp: {
               home: this.$fileUrl,
@@ -97,13 +97,14 @@ export default {
             action: "/common/uploadFile",
             display: false,
             rules: [],
+            uploadPreview: this.$onUploadPreview,
           },
           {
             label: "欧代证书",
             prop: "ouDaiCe",
             type: "upload",
             accept: ".pdf,.png,.jpeg,.jpg",
-            listType: "text",
+            listType: "picture-card",
             multiple: false,
             propsHttp: {
               home: this.$fileUrl,
@@ -113,10 +114,11 @@ export default {
             data: {
               name: "欧代证书"
             },
-            tip: "只能上传pdf文件或jpg/png图片，且不超过5M",
+            tip: this.$tip,
             action: "/common/uploadFile",
             display: false,
             rules: [],
+            uploadPreview: this.$onUploadPreview,
           },
           {
             label: "驳回原因",

@@ -55,6 +55,7 @@ export default {
         delBtn: false,
         span: 24,
         dialogWidth: '500',
+        dialogClickModal: false,
         column: [
           {
             label: "产品名称",
@@ -122,18 +123,9 @@ export default {
               home: this.$fileUrl,
               res: "data",
             },
-            canvasOption: {
-              text: " ",
-              ratio: 1,
-            },
             tip: "只能上传jpg/png图片，且不超过5M",
             action: "/common/uploadFile",
-            rules: [
-              {
-                required: true,
-                message: "上传证书/检测报告",
-              },
-            ],
+            uploadPreview: this.$onUploadPreview,
           },
           {
             label: "产品包装六面图",
@@ -147,18 +139,9 @@ export default {
               home: this.$fileUrl,
               res: "data",
             },
-            canvasOption: {
-              text: " ",
-              ratio: 1,
-            },
             tip: "只能上传jpg/png图片，且不超过5M",
             action: "/common/uploadFile",
-            rules: [
-              {
-                required: true,
-                message: "上传产品包装六面图",
-              },
-            ],
+            uploadPreview: this.$onUploadPreview,
           },
           {
             label: "产品说明书",
@@ -172,18 +155,9 @@ export default {
               home: this.$fileUrl,
               res: "data",
             },
-            canvasOption: {
-              text: " ",
-              ratio: 1,
-            },
             tip: "只能上传jpg/png图片，且不超过5M",
             action: "/common/uploadFile",
-            rules: [
-              {
-                required: true,
-                message: "上传产品产品说明书",
-              },
-            ],
+            uploadPreview: this.$onUploadPreview,
           }
         ],
       },
