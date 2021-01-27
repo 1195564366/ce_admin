@@ -68,28 +68,74 @@ export const constantRoutes = [
   },
 
   {
-    path: '/shopList',
+    path: '/oudai',
     component: Layout,
-    redirect: '/shopList/index',
+    meta: { title: '欧代管理', icon: 'analysis' },
+    redirect: '/oudai/shop',
     children: [{
-      path: 'index',
+      path: 'shop',
       name: 'shopList',
       component: () => import('@/views/shopList'),
       meta: { title: '店铺管理', icon: 'analysis' }
+    }, {
+      path: 'product',
+      name: 'productList',
+      component: () => import('@/views/productList'),
+      meta: { title: '产品管理', icon: 'analysis' }
+    }, {
+      path: 'sendGoods',
+      name: 'sendGoods',
+      component: () => import('@/views/sendGoods'),
+      meta: { title: '发货记录', icon: 'analysis' }
+    }, {
+      path: 'order',
+      name: 'order',
+      component: () => import('@/views/order'),
+      meta: { title: '账单管理', icon: 'analysis' }
     }]
   },
 
   {
-    path: '/productList',
+    path: '/huishou',
     component: Layout,
-    redirect: '/productList/index',
+    meta: { title: '回收管理', icon: 'analysis' },
+    redirect: '/huishou/business',
     children: [{
-      path: 'index',
-      name: 'index',
-      component: () => import('@/views/productList'),
-      meta: { title: '产品管理', icon: 'analysis' }
+      path: 'business',
+      name: 'business',
+      component: () => import('@/views/business'),
+      meta: { title: '业务管理', icon: 'analysis' }
+    }, {
+      path: 'declare',
+      name: 'declare',
+      component: () => import('@/views/declare'),
+      meta: { title: '申报记录', icon: 'analysis' }
     }]
   },
+
+  // {
+  //   path: '/shopList',
+  //   component: Layout,
+  //   redirect: '/shopList/index',
+  //   children: [{
+  //     path: 'index',
+  //     name: 'shopList',
+  //     component: () => import('@/views/shopList'),
+  //     meta: { title: '店铺管理', icon: 'analysis' }
+  //   }]
+  // },
+
+  // {
+  //   path: '/productList',
+  //   component: Layout,
+  //   redirect: '/productList/index',
+  //   children: [{
+  //     path: 'index',
+  //     name: 'index',
+  //     component: () => import('@/views/productList'),
+  //     meta: { title: '产品管理', icon: 'analysis' }
+  //   }]
+  // },
 
   {
     path: '/reviewed',
@@ -125,41 +171,53 @@ export const constantRoutes = [
   },
 
 
-  {
-    path: '/sendGoods',
-    component: Layout,
-    redirect: '/sendGoods/index',
-    children: [{
-      path: 'index',
-      name: 'index',
-      component: () => import('@/views/sendGoods'),
-      meta: { title: '发货记录', icon: 'analysis' }
-    }]
-  },
+  // {
+  //   path: '/sendGoods',
+  //   component: Layout,
+  //   redirect: '/sendGoods/index',
+  //   children: [{
+  //     path: 'index',
+  //     name: 'index',
+  //     component: () => import('@/views/sendGoods'),
+  //     meta: { title: '发货记录', icon: 'analysis' }
+  //   }]
+  // },
 
-  {
-    path: '/order',
-    component: Layout,
-    redirect: '/order/index',
-    children: [{
-      path: 'index',
-      name: 'index',
-      component: () => import('@/views/order'),
-      meta: { title: '账单管理', icon: 'analysis' }
-    }]
-  },
+  // {
+  //   path: '/order',
+  //   component: Layout,
+  //   redirect: '/order/index',
+  //   children: [{
+  //     path: 'index',
+  //     name: 'index',
+  //     component: () => import('@/views/order'),
+  //     meta: { title: '账单管理', icon: 'analysis' }
+  //   }]
+  // },
 
-  {
-    path: '/business',
-    component: Layout,
-    redirect: '/business/index',
-    children: [{
-      path: 'index',
-      name: 'index',
-      component: () => import('@/views/business'),
-      meta: { title: '业务管理', icon: 'analysis' }
-    }]
-  },
+  // {
+  //   path: '/declare',
+  //   component: Layout,
+  //   redirect: '/declare/index',
+  //   children: [{
+  //     path: 'index',
+  //     name: 'index',
+  //     component: () => import('@/views/declare'),
+  //     meta: { title: '申报记录', icon: 'analysis' }
+  //   }]
+  // },
+
+  // {
+  //   path: '/business',
+  //   component: Layout,
+  //   redirect: '/business/index',
+  //   children: [{
+  //     path: 'index',
+  //     name: 'index',
+  //     component: () => import('@/views/business'),
+  //     meta: { title: '回收管理', icon: 'analysis' }
+  //   }]
+  // },
 
 
   // 404 page must be placed at the end !!!

@@ -46,6 +46,7 @@ export default {
         addBtn: false,
         span: 24,
         dialogWidth: this.$dialogWidth,
+        dialogClickModal: false,
         column: [
           {
             label: "用户名称",

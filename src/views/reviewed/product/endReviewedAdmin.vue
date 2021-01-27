@@ -53,42 +53,36 @@ export default {
             prop: "doc",
             type: "upload",
             accept: ".doc,.docx",
-            listType: "text",
+            listType: "picture-img",
             multiple: false,
             span: 24,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
             },
-            limit: 1,
-            data: {
-              name: "doc文件"
-            },
             tip: "只能上传doc/docx文件，且不超过5M",
             action: "/common/uploadFile",
             display: false,
             rules: [],
+            uploadPreview: this.$onUploadPreview,
           },
           {
             label: "欧代证书",
             prop: "ouDaiCe",
             type: "upload",
             accept: ".pdf,.png,.jpeg,.jpg",
-            listType: "text",
+            listType: "picture-img",
             multiple: false,
             span: 24,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
             },
-            limit: 1,
-            data: {
-              name: "欧代证书"
-            },
             tip: "只能上传pdf文件或jpg/png图片，且不超过5M",
             action: "/common/uploadFile",
             display: false,
             rules: [],
+            uploadPreview: this.$onUploadPreview,
           },
           {
             label: "驳回原因",

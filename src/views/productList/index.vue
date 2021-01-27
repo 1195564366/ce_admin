@@ -41,26 +41,31 @@ export default {
         viewBtn: true,
         dialogWidth: this.$dialogWidth,
         span: 24,
+        dialogClickModal: false,
         column: [
+          {
+            label: "用户",
+            prop: "userName",
+            search: true
+          },
           {
             label: "产品名称",
             prop: "productName",
-          },
-          {
-            label: "产品所有人",
-            prop: "phone"
+            search: true
           },
           {
             label: "国家",
             prop: "country",
             type: "select",
             dicData: Dic.find("DIC006"),
+            search: true
           },
           {
             label: "产品分类",
             prop: "productClass",
             type: "select",
             dicData: Dic.find("DIC007"),
+            search: true
           },
           {
             label: "产品型号",
@@ -79,10 +84,6 @@ export default {
               home: this.$fileUrl,
               res: "data",
             },
-            canvasOption: {
-              text: " ",
-              ratio: 1,
-            },
             tip: "只能上传jpg/png图片，且不超过5M",
             action: "/common/uploadFile",
             rules: [
@@ -91,6 +92,7 @@ export default {
                 message: "上传证书/检测报告",
               },
             ],
+            uploadPreview: this.$onUploadPreview,
           },
           {
             label: "产品包装六面图",
@@ -104,10 +106,6 @@ export default {
               home: this.$fileUrl,
               res: "data",
             },
-            canvasOption: {
-              text: " ",
-              ratio: 1,
-            },
             tip: "只能上传jpg/png图片，且不超过5M",
             action: "/common/uploadFile",
             rules: [
@@ -116,6 +114,7 @@ export default {
                 message: "上传产品包装六面图",
               },
             ],
+            uploadPreview: this.$onUploadPreview,
           },
           {
             label: "产品说明书",
@@ -129,10 +128,6 @@ export default {
               home: this.$fileUrl,
               res: "data",
             },
-            canvasOption: {
-              text: " ",
-              ratio: 1,
-            },
             tip: "只能上传jpg/png图片，且不超过5M",
             action: "/common/uploadFile",
             rules: [
@@ -141,6 +136,7 @@ export default {
                 message: "上传产品产品说明书",
               },
             ],
+            uploadPreview: this.$onUploadPreview,
           },
         ],
       },
@@ -160,8 +156,11 @@ export default {
       });
       this.tableLoading = false;
       this.data = result ? result.rows.map(item => {
-        item.phone = item.user.phone;
-        return item
+        const { user: { name: userName } } = item;
+        return {
+          userName,
+          ...item
+        }
       }) : [];
       this.page.total = result ? result.count : 0;
       cb();

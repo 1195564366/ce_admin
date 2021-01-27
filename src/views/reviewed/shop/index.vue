@@ -165,7 +165,6 @@ export default {
               },
             ],
             uploadPreview: this.$onUploadPreview,
-            dialogClickModal: false,
           },
           {
             label: "联系人姓名",

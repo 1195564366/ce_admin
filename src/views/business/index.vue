@@ -61,7 +61,7 @@ export default {
             message: `上传${label}`,
           },
         ],
-        uploadPreview: onUploadPreview,
+        uploadPreview: this.$onUploadPreview,
       };
     };
     return {
@@ -79,6 +79,7 @@ export default {
         viewBtn: true,
         dialogWidth: this.$dialogWidth,
         span: 24,
+        dialogClickModal: false,
         column: [
           {
             label: "用户",
@@ -185,7 +186,7 @@ export default {
                 message: "上传产品证书",
               },
             ],
-            uploadPreview: onUploadPreview
+            uploadPreview: this.$onUploadPreview,
           },
         ],
       },
@@ -262,8 +263,12 @@ export default {
       this.getList();
     },
     currentChange() {},
-    refreshChange() {},
-    searchChange() {},
+    refreshChange() {
+      this.getList();
+    },
+    searchChange() {
+      this.getList();
+    },
   },
 };
 </script>

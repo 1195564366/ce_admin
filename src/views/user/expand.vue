@@ -27,6 +27,8 @@ export default {
         refreshBtn: false,
         span: 24,
         menu: false,
+        dialogWidth: this.$dialogWidth,
+        dialogClickModal: false,
         column: [
           {
             label: "店铺名称",

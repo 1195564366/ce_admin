@@ -51,8 +51,9 @@ export default {
         delBtn: false,
         addBtn: false,
         viewBtn: true,
-        dialogWidth: '30%',
+        dialogWidth: this.$dialogWidth,
         span: 24,
+        dialogClickModal: false,
         column: [
           {
             label: "店铺名称",
@@ -97,10 +98,6 @@ export default {
               home: this.$fileUrl,
               res: "data",
             },
-            canvasOption: {
-              text: " ",
-              ratio: 1,
-            },
             tip: "只能上传jpg/png图片，且不超过5M",
             action: "/common/uploadFile",
             rules: [
@@ -109,6 +106,7 @@ export default {
                 message: "上传营业执照",
               },
             ],
+            uploadPreview: this.$onUploadPreview,
           },
           {
             label: "联系人姓名",

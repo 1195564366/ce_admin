@@ -18,7 +18,7 @@
     </avue-crud>
 
     <!-- 审核表单 -->
-    <el-dialog title="回收审核" :visible="reviewedShow" width="500px" @close="reviewedClose">
+    <el-dialog title="回收审核" :visible="reviewedShow" width="500px" @close="reviewedClose" :close-on-click-modal="false">
       <avue-form
         :option="reviewedOption"
         ref="reviewedForm"
@@ -96,6 +96,7 @@ export default {
         delBtn: false,
         addBtn: false,
         viewBtn: true,
+        dialogClickModal: false,
         column: [
           {
             label: "公司名称",
@@ -121,10 +122,6 @@ export default {
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
-            },
-            canvasOption: {
-              text: " ",
-              ratio: 1,
             },
             tip: "只能上传jpg/png图片，且不超过5M",
             action: "/common/uploadFile",

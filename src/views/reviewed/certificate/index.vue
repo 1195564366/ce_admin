@@ -47,6 +47,7 @@ export default {
         delBtn: false,
         span: 24,
         dialogWidth: '500',
+        dialogClickModal: false,
         column: [
           {
             label: "店铺名称",

@@ -9,18 +9,6 @@
       @refresh-change="refreshChange"
       @search-change="searchChange"
     >
-      <template slot="phone" slot-scope="scope">
-        {{ scope.row.user.name }}
-      </template>
-      <template slot="productName" slot-scope="scope">
-        {{ scope.row.product.productName }}
-      </template>
-      <template slot="shopName" slot-scope="scope">
-        {{ scope.row.shop.shopName }}
-      </template>
-      <template slot="asin" slot-scope="scope">
-        {{ scope.row.shopToProduct.asin }}
-      </template>
     </avue-crud>
 
     <Confirm ref="confirm" />
@@ -49,26 +37,27 @@ export default {
         labelWidth: "120",
         menu: false,
         addBtn: false,
+        dialogClickModal: false,
+        dialogWidth: this.$dialogWidth,
         column: [
           {
             label: "发货人",
-            prop: "phone",
-            slot: true,
+            prop: "userName",
+            search: true
           },
           {
             label: "店铺名称",
             prop: "shopName",
-            slot: true,
+            search: true
           },
           {
             label: "产品名称",
             prop: "productName",
-            slot: true,
+            search: true
           },
           {
             label: "产品ASIN",
-            prop: "asin",
-            slot: true,
+            prop: "asin"
           },
           {
             label: "箱数",
@@ -104,8 +93,14 @@ export default {
       this.tableLoading = false;
       this.data = result
         ? result.rows.map((item) => {
-            item.phone = item.user.phone;
-            return item;
+          const { user: { name: userName }, shop: { shopName }, product: { productName }, shopToProduct: { asin } } = item;
+            return {
+              userName,
+              shopName,
+              productName,
+              asin,
+              ...item
+            };
           })
         : [];
       this.page.total = result ? result.count : 0;

@@ -65,7 +65,6 @@ Vue.prototype.$onUploadPreview = (file, column, done) => {
 Vue.config.productionTip = false
 
 document.addEventListener("error", function (e) {
-  console.log(e);
   const elem = e.target;
   if (elem.tagName.toLowerCase() === "img") {
     elem.src = otherFileImg;

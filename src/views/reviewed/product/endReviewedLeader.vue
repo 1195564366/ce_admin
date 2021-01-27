@@ -50,7 +50,7 @@ export default {
             type: "upload",
             span: 24,
             detail: true,
-            listType: "text",
+            listType: "picture-img",
             multiple: false,
             span: 24,
             propsHttp: {
@@ -65,7 +65,7 @@ export default {
             type: "upload",
             span: 24,
             detail: true,
-            listType: "text",
+            listType: "picture-img",
             multiple: false,
             span: 24,
             propsHttp: {
