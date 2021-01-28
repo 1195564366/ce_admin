@@ -45,7 +45,7 @@ export default {
         hide: true,
         type: "upload",
         accept,
-        multiple: false,
+        multiple: true,
         editDisabled,
         span: 24,
         listType,
@@ -171,7 +171,7 @@ export default {
             hide: true,
             type: "upload",
             accept: this.$accept,
-            multiple: false,
+            multiple: true,
             span: 24,
             listType: "picture-card",
             propsHttp: {
@@ -190,6 +190,7 @@ export default {
           },
         ],
       },
+    
     };
   },
   watch: {

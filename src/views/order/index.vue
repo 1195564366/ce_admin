@@ -50,15 +50,23 @@ export default {
         dialogClickModal: false,
         column: [
           {
-            label: "用户",
+            label: "账单号",
+            prop: "orderId",
+            search: true,
+            editDisabled: true,
+          },
+          {
+            label: "用户名",
             prop: "name",
             search: true,
             editDisabled: true,
           },
           {
-            label: "账单号",
-            prop: "orderId",
+            label: "用户来源",
+            prop: "source",
+            type: "select",
             search: true,
+            dicData: Dic.find("DIC004"),
             editDisabled: true,
           },
           {
@@ -92,6 +100,7 @@ export default {
           {
             label: "下单时间",
             prop: "createdAt",
+            search: true,
             type: "date",
             format: "yyyy-MM-dd HH:mm:ss",
             valueFormat: "yyyy-MM-dd HH:mm:ss",
@@ -107,10 +116,17 @@ export default {
   methods: {
     // 导出账单数据
     async onExportOrder() {
+      const loading = this.$loading({
+        lock: true,
+        text: '账单导出中...',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
       axios({
         url: "/admin/order/download",
         method: "get",
         responseType: "blob",
+        params: this.search,
         headers: {
           token: getToken()
         }
@@ -139,10 +155,12 @@ export default {
         pageNo: this.page.currentPage,
         pageSize: this.page.pageSize,
       });
+      console.log(result)
       this.tableLoading = false;
       this.data = result
         ? result.rows.map((item) => {
             item.name = item.user.name;
+            item.source = item.user.source;
             return item;
           })
         : [];

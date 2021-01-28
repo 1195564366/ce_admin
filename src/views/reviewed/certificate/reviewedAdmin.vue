@@ -84,7 +84,7 @@ export default {
             type: "upload",
             accept: ".doc,.docx",
             listType: "picture-card",
-            multiple: false,
+            multiple: true,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
@@ -105,7 +105,7 @@ export default {
             type: "upload",
             accept: ".pdf,.png,.jpeg,.jpg",
             listType: "picture-card",
-            multiple: false,
+            multiple: true,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",

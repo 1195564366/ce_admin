@@ -80,7 +80,7 @@ export default {
             detail: true,
             listType: "picture-card",
             uploadPreview: this.$onUploadPreview,
-            multiple: false,
+            multiple: true,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
@@ -94,7 +94,7 @@ export default {
             detail: true,
             listType: "picture-card",
             uploadPreview: this.$onUploadPreview,
-            multiple: false,
+            multiple: true,
             propsHttp: {
               home: this.$fileUrl,
               res: "data",
