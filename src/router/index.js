@@ -63,53 +63,53 @@ export const constantRoutes = [
       path: 'index',
       name: 'index',
       component: () => import('@/views/user'),
-      meta: { title: '用户管理', icon: 'analysis' }
+      meta: { title: '用户管理', icon: 'user' }
     }]
   },
 
   {
     path: '/oudai',
     component: Layout,
-    meta: { title: '欧代管理', icon: 'analysis' },
+    meta: { title: '欧代管理', icon: 'oudai' },
     redirect: '/oudai/shop',
     children: [{
       path: 'shop',
       name: 'shopList',
       component: () => import('@/views/shopList'),
-      meta: { title: '店铺管理', icon: 'analysis' }
+      meta: { title: '店铺管理', icon: 'shop' }
     }, {
       path: 'product',
       name: 'productList',
       component: () => import('@/views/productList'),
-      meta: { title: '产品管理', icon: 'analysis' }
+      meta: { title: '产品管理', icon: 'product' }
     }, {
       path: 'sendGoods',
       name: 'sendGoods',
       component: () => import('@/views/sendGoods'),
-      meta: { title: '发货记录', icon: 'analysis' }
+      meta: { title: '发货记录', icon: 'sendGood' }
     }, {
       path: 'order',
       name: 'order',
       component: () => import('@/views/order'),
-      meta: { title: '账单管理', icon: 'analysis' }
+      meta: { title: '账单管理', icon: 'order' }
     }]
   },
 
   {
     path: '/huishou',
     component: Layout,
-    meta: { title: '回收管理', icon: 'analysis' },
+    meta: { title: '回收管理', icon: 'huishou' },
     redirect: '/huishou/business',
     children: [{
       path: 'business',
       name: 'business',
       component: () => import('@/views/business'),
-      meta: { title: '业务管理', icon: 'analysis' }
+      meta: { title: '业务管理', icon: 'business' }
     }, {
       path: 'declare',
       name: 'declare',
       component: () => import('@/views/declare'),
-      meta: { title: '申报记录', icon: 'analysis' }
+      meta: { title: '申报记录', icon: 'order' }
     }]
   },
 
@@ -141,32 +141,32 @@ export const constantRoutes = [
     path: '/reviewed',
     component: Layout,
     redirect: '/reviewed/shop',
-    meta: { title: '审核中心', icon: 'analysis' },
+    meta: { title: '审核中心', icon: 'reviewed' },
     children: [{
       path: 'shop',
       name: 'reviewedShop',
       component: () => import('@/views/reviewed/shop'),
-      meta: { title: '店铺审核', icon: 'analysis' }
+      meta: { title: '店铺审核', icon: 'shop' }
     }, {
       path: 'certificate',
       name: 'reviewedCertificate',
       component: () => import('@/views/reviewed/certificate'),
-      meta: { title: '证书审核', icon: 'analysis' }
+      meta: { title: '证书审核', icon: 'certificate' }
     }, {
       path: 'product',
       name: 'reviewedProduct',
       component: () => import('@/views/reviewed/product'),
-      meta: { title: '产品审核', icon: 'analysis' }
+      meta: { title: '产品审核', icon: 'product' }
     }, {
       path: 'recover',
       name: 'reviewedRecover',
       component: () => import('@/views/reviewed/recover'),
-      meta: { title: '回收审核', icon: 'analysis' }
+      meta: { title: '回收审核', icon: 'huishou' }
     }, {
       path: 'declare',
       name: 'declareRecover',
       component: () => import('@/views/reviewed/declare'),
-      meta: { title: '申报审核', icon: 'analysis' }
+      meta: { title: '申报审核', icon: 'order' }
     }]
   },
 
