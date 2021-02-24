@@ -9,6 +9,16 @@
       @refresh-change="refreshChange"
       @search-change="searchChange"
     >
+      <template slot="status" slot-scope="{row: { status }}">
+        <el-tag v-if="status === 'waitReviewed'">待审核</el-tag>
+        <el-tag v-if="status === 'adopt'" type="success">通过</el-tag>
+        <el-tag v-if="status === 'reject'" type="danger">驳回</el-tag>
+      </template>
+      <template slot="statusForm" slot-scope="{row: { status }}">
+        <el-tag v-if="status === 'waitReviewed'">待审核</el-tag>
+        <el-tag v-if="status === 'adopt'" type="success">通过</el-tag>
+        <el-tag v-if="status === 'reject'" type="danger">驳回</el-tag>
+      </template>
       <template slot-scope="scope" slot="menu">
         <el-button
           type="text"
@@ -112,6 +122,7 @@ export default {
           {
             label: "店铺链接",
             prop: "shopLink",
+            type: "url"
           },
           {
             label: "法人姓名",
@@ -190,6 +201,8 @@ export default {
             label: "审核状态",
             prop: "status",
             type: 'select',
+            slot: true,
+            formSlot: true,
             addDisplay: false,
             editDisplay: false,
             dicData: Dic.find("DIC001"),

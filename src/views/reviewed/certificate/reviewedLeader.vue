@@ -6,7 +6,12 @@
       @submit="submit"
       ref="form"
       @reset-change="resetChange"
-    ></avue-form>
+    >
+      <template slot="adminStatus">
+        <el-tag v-if="form.adminStatus === '3'" type="success">通过</el-tag>
+        <el-tag v-else-if="form.adminStatus === '2'" type="danger">驳回</el-tag>
+      </template>
+    </avue-form>
   </el-dialog>
 </template>
 
@@ -62,6 +67,7 @@ export default {
             prop: "adminStatus",
             type: "radio",
             detail: true,
+            formslot: true,
             dicData: [
               {
                 label: "通过",
@@ -250,7 +256,6 @@ export default {
   },
   methods: {
     open(row) {
-      console.log(row);
       const { id, productName, shopName, country, brand, asin, asgl, doc, ouDaiCe, status, rejectReason } = row;
       this.id = id;
       this.form = this.storageData = {
@@ -260,6 +265,7 @@ export default {
         adminStatus: status,
         adminRejectReason: rejectReason
       };
+      console.log(this.form);
       this.show = true;
     },
     close() {

@@ -6,7 +6,12 @@
       @submit="submit"
       ref="form"
       @reset-change="resetChange"
-    ></avue-form>
+    >
+      <template slot="adminStatus">
+        <el-tag v-if="adminStatus === '3'" type="success">通过</el-tag>
+        <el-tag v-else-if="adminStatus === '2'" type="danger">驳回</el-tag>
+      </template>
+    </avue-form>
   </el-dialog>
 </template>
 
@@ -37,6 +42,7 @@ export default {
             prop: "adminStatus",
             type: 'radio',
             detail: true,
+            formslot: true,
             dicData: [
               {
                 label: "通过",
@@ -79,7 +85,7 @@ export default {
             label: "驳回原因",
             prop: "rejectReason",
             type: "textarea",
-            display: false,
+            menu: false,
             rules: [],
           },
         ],
@@ -108,6 +114,13 @@ export default {
       },
       immediate: true,
     },
+    "form.adminStatus": {
+      handler(val) {
+        const adminRejectReason = this.findObject(this.option.column, "adminRejectReason");
+        adminRejectReason.display = val === "2";
+      },
+      immediate: true
+    }
   },
   methods: {
     open(row) {

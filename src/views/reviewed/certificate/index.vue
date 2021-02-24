@@ -9,6 +9,20 @@
       @refresh-change="refreshChange"
       @search-change="searchChange"
     >
+      <template slot="status" slot-scope="{row: { status }}">
+        <el-tag v-if="status === '5'" type="success">通过</el-tag>
+        <el-tag v-else-if="status === '4'" type="danger">驳回</el-tag>
+        <el-tag v-else-if="status === '3'" type="success">管理员审核通过</el-tag>
+        <el-tag v-else-if="status === '2'" type="danger">管理员审核驳回</el-tag>
+        <el-tag v-else>待审核</el-tag>
+      </template>
+      <template slot="statusForm" slot-scope="{row: { status }}">
+        <el-tag v-if="status === '5'" type="success">通过</el-tag>
+        <el-tag v-else-if="status === '4'" type="danger">驳回</el-tag>
+        <el-tag v-else-if="status === '3'" type="success">管理员审核通过</el-tag>
+        <el-tag v-else-if="status === '2'" type="danger">管理员审核驳回</el-tag>
+        <el-tag v-else>待审核</el-tag>
+      </template>
       <template slot-scope="scope" slot="menu">
         <el-button type="text" size="mini" @click="reviewedAdmin(scope.row)" icon="el-icon-s-check" v-if="scope.row.status === '1'">审核</el-button>
         <el-button type="text" size="mini" @click="reviewedLeader(scope.row)" icon="el-icon-s-check" v-if="['2', '3'].includes(scope.row.status)">审核</el-button>
@@ -81,7 +95,9 @@ export default {
             prop: "status",
             type: "select",
             dicData: Dic.find('DIC012'),
-            addDisplay: false
+            addDisplay: false,
+            slot: true,
+            formSlot: true
           },
         ],
       },
