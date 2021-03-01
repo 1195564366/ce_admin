@@ -9,6 +9,14 @@
       @refresh-change="refreshChange"
       @search-change="searchChange"
     >
+    <template slot="shopLink" slot-scope="{row: { shopLink }}">
+      <el-tooltip effect="dark" :content="shopLink" placement="top">
+        <div slot="content">
+          <el-link type="primary" :href="shopLink" target="_blank">{{ shopLink }}</el-link>
+        </div>
+        <el-link type="primary" :href="shopLink" target="_blank" :underline="false">访问</el-link>
+      </el-tooltip>
+    </template>
     <template slot-scope="scope" slot="useStatus">
       <el-switch
         v-model="scope.row.useStatus"
@@ -63,6 +71,7 @@ export default {
           {
             label: "店铺链接",
             prop: "shopLink",
+            slot: true,
             type: 'url'
           },
           {
@@ -75,7 +84,6 @@ export default {
             prop: "legalPrsonName",
             hide: true,
           },
-          
           {
             label: "法人身份证",
             prop: "legalPrsonCard",
